@@ -335,6 +335,7 @@
   "unable_to_launch_google_map": "Unable to launch google map",
   "connected": "Connected",
   "no_connection": "No internet connection",
+  "please_check_your_network_connection": "Please check your network connection",
   "ready_for_handover": "Ready for handover",
   "for_demo_purpose": "For demo purpose please use 123456 as OTP",
   "more": "More",

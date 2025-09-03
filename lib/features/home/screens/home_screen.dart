@@ -8,6 +8,8 @@ import 'package:sixam_mart/features/home/controllers/home_controller.dart';
 import 'package:sixam_mart/features/home/widgets/all_store_filter_widget.dart';
 import 'package:sixam_mart/features/home/widgets/cashback_logo_widget.dart';
 import 'package:sixam_mart/features/home/widgets/cashback_dialog_widget.dart';
+import 'package:sixam_mart/features/home/widgets/components/home_app_bar.dart';
+import 'package:sixam_mart/features/home/widgets/components/search_button.dart';
 import 'package:sixam_mart/features/home/widgets/refer_bottom_sheet_widget.dart';
 import 'package:sixam_mart/features/item/controllers/campaign_controller.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
@@ -267,110 +269,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 slivers: [
 
                   /// App Bar
-                  SliverAppBar(
-                    floating: true,
-                    elevation: 0,
-                    automaticallyImplyLeading: false,
-                    surfaceTintColor: Theme.of(context).colorScheme.surface,
-                    backgroundColor: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).colorScheme.surface,
-                    title: Center(child: Container(
-                      width: Dimensions.webMaxWidth, height: Get.find<LocalizationController>().isLtr ? 60 : 70, color: Theme.of(context).colorScheme.surface,
-                      child: Row(children: [
-                        (splashController.module != null && splashController.configModel!.module == null && splashController.moduleList != null && splashController.moduleList!.length != 1) ? InkWell(
-                          onTap: () {
-                            splashController.removeModule();
-                            Get.find<StoreController>().resetStoreData();
-                          },
-                          child: Image.asset(Images.moduleIcon, height: 25, width: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
-                        ) : const SizedBox(),
-                        SizedBox(width: (splashController.module != null && splashController.configModel!.module == null && splashController.moduleList != null && splashController.moduleList!.length != 1) ? Dimensions.paddingSizeSmall : 0),
-
-                        Expanded(child: InkWell(
-                          onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: Dimensions.paddingSizeSmall,
-                              horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
-                            ),
-                            child: GetBuilder<LocationController>(builder: (locationController) {
-                              return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                Text(
-                                  AuthHelper.isLoggedIn() ? AddressHelper.getUserAddressFromSharedPref()!.addressType!.tr : 'your_location'.tr,
-                                  style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeDefault),
-                                  maxLines: 1, overflow: TextOverflow.ellipsis,
-                                ),
-
-                                Row(children: [
-                                  Flexible(
-                                    child: Text(
-                                      AddressHelper.getUserAddressFromSharedPref()!.address!,
-                                      style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                                      maxLines: 1, overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-
-                                  Icon(Icons.expand_more, color: Theme.of(context).disabledColor, size: 18),
-
-                                ]),
-
-                              ]);
-                            }),
-                          ),
-                        )),
-                        InkWell(
-                          child: GetBuilder<NotificationController>(builder: (notificationController) {
-                            return Stack(children: [
-                              Icon(CupertinoIcons.bell, size: 25, color: Theme.of(context).textTheme.bodyLarge!.color),
-                              notificationController.hasNotification ? Positioned(top: 0, right: 0, child: Container(
-                                height: 10, width: 10, decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor, shape: BoxShape.circle,
-                                border: Border.all(width: 1, color: Theme.of(context).cardColor),
-                              ),
-                              )) : const SizedBox(),
-                            ]);
-                          }),
-                          onTap: () => Get.toNamed(RouteHelper.getNotificationRoute()),
-                        ),
-                      ]),
-                    )),
-                    actions: const [SizedBox()],
-                  ),
+                  const HomeAppBar(),
 
                   /// Search Button
-                  !showMobileModule && !isTaxi ? SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SliverDelegate(callback: (val){}, child: Center(child: Container(
-                      height: 50, width: Dimensions.webMaxWidth,
-                      color: searchBgShow ? Get.find<ThemeController>().darkTheme ? Theme.of(context).colorScheme.surface : Theme.of(context).cardColor : null,
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                      child: isTaxi? Container(color: Theme.of(context).primaryColor): InkWell(
-                        onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                          margin: const EdgeInsets.symmetric(vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            border: Border.all(color: Theme.of(context).primaryColor.withValues(alpha: 0.2), width: 1),
-                            borderRadius: BorderRadius.circular(25),
-                            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
-                          ),
-                          child: Row(children: [
-                            Icon(
-                              CupertinoIcons.search, size: 25,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                            Expanded(child: Text(
-                              Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'search_food_or_restaurant'.tr : 'search_item_or_store'.tr,
-                              style: robotoRegular.copyWith(
-                                fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor,
-                              ),
-                            )),
-                          ]),
-                        ),
-                      ),
-                    ))),
-                  ) : const SliverToBoxAdapter(),
+                  // !showMobileModule && !isTaxi ? SearchButton(searchBgShow: searchBgShow, isTaxi: isTaxi,) : const SliverToBoxAdapter(),
+                  SearchButton(searchBgShow: searchBgShow, isTaxi: isTaxi,),
 
                   SliverToBoxAdapter(
                     child: Center(child: SizedBox(

@@ -1,17 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
 import 'package:sixam_mart/common/widgets/custom_asset_image_widget.dart';
-import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
-import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/search/controllers/search_controller.dart' as search;
+import 'package:sixam_mart/features/search/widgets/search_recent_widget.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
-import 'package:sixam_mart/common/widgets/custom_image.dart';
 import 'package:sixam_mart/common/widgets/custom_snackbar.dart';
 import 'package:sixam_mart/common/widgets/footer_view.dart';
 import 'package:sixam_mart/common/widgets/menu_drawer.dart';
@@ -227,179 +225,9 @@ class SearchScreenState extends State<SearchScreen> with TickerProviderStateMixi
 
               Expanded(child: searchController.isSearchMode ? _showSuggestion ? showSuggestions(
                 context, searchController, _itemsAndStors,
-              ) : SingleChildScrollView(
-                padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                child: FooterView(
-                  child: SizedBox(width: Dimensions.webMaxWidth, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                    searchController.historyList.isNotEmpty ? Padding(
-                      padding: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-
-                        Text(ResponsiveHelper.isDesktop(context) ? 'recent_searches'.tr : 'your_last_search'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
-                        InkWell(
-                          onTap: () => searchController.clearSearchHistory(),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall, horizontal: 4),
-                            child: Text('clear_all'.tr, style: robotoRegular.copyWith(
-                              fontSize: Dimensions.fontSizeDefault, color: Colors.red,
-                            )),
-                          ),
-                        ),
-                      ]),
-                    ) : const SizedBox(),
-
-                    SizedBox(
-                      height: ResponsiveHelper.isDesktop(context) ? 36 : null,
-                      child: ListView.builder(
-                        itemCount: searchController.historyList.length > 10 ? 10 : searchController.historyList.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: ResponsiveHelper.isDesktop(context) ? Axis.horizontal : Axis.vertical,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return ResponsiveHelper.isDesktop(context) ?
-                            Container(
-                            margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-                             padding: const EdgeInsets.symmetric(horizontal : Dimensions.paddingSizeDefault),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor.withValues(alpha: 0.10),
-                                border: Border.all(color: Theme.of(context).primaryColor),
-                                borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  _searchController.text = searchController.historyList[index];
-                                  // searchController.setSearchText(searchController.historyList[index]);
-                                  searchController.searchData(searchController.historyList[index], false);
-                                },
-                                child: Row(
-                                  children: [
-                                    Text(searchController.historyList[index], style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor), maxLines: 1, overflow: TextOverflow.ellipsis),
-                                    const SizedBox(width: Dimensions.paddingSizeSmall),
-
-                                    InkWell(
-                                      onTap: () => searchController.removeHistory(index),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                                        child: Icon(Icons.close, color: Theme.of(context).primaryColor, size: 16),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ) : InkWell(
-                            onTap: () => searchController.searchData(searchController.historyList[index], false),
-                            child: Row(children: [
-
-                              Icon(CupertinoIcons.search, size: 18, color: Theme.of(context).disabledColor),
-                              const SizedBox(width: Dimensions.paddingSizeSmall),
-
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
-                                  child: Text(
-                                    searchController.historyList[index],
-                                    style: robotoRegular, maxLines: 1, overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () => searchController.removeHistory(index),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                                  child: Icon(Icons.close, color: Theme.of(context).disabledColor, size: 20),
-                                ),
-                              )
-                            ]),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: Dimensions.paddingSizeLarge),
-
-                    (_isLoggedIn && searchController.suggestedItemList != null) ? Text(
-                      'suggestions'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
-                    ) : const SizedBox(),
-                    const SizedBox(height: Dimensions.paddingSizeSmall),
-                    (_isLoggedIn && searchController.suggestedItemList != null) ? searchController.suggestedItemList!.isNotEmpty ?  GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : 3, childAspectRatio:  ResponsiveHelper.isMobile(context) ? (1/ 0.4) : (1.8/ 0.3),
-                        mainAxisSpacing: Dimensions.paddingSizeSmall, crossAxisSpacing: Dimensions.paddingSizeSmall,
-                      ),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: searchController.suggestedItemList!.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                            boxShadow: [BoxShadow(color: Theme.of(context).disabledColor.withValues(alpha: 0.1), blurRadius: 10)]
-                          ),
-                          child: CustomInkWell(
-                            onTap: () {
-                              Get.find<ItemController>().navigateToItemPage(searchController.suggestedItemList![index], context);
-                            },
-                            radius: Dimensions.radiusDefault,
-                            child: Row(children: [
-                              const SizedBox(width: Dimensions.paddingSizeSmall),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                                child: CustomImage(
-                                  image: '${searchController.suggestedItemList![index].imageFullUrl}',
-                                  width: 45, height: 45, fit: BoxFit.cover,
-                                ),
-                              ),
-                              const SizedBox(width: Dimensions.paddingSizeSmall),
-                              Expanded(child: Text(
-                                searchController.suggestedItemList![index].name!,
-                                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-                                maxLines: 2, overflow: TextOverflow.ellipsis,
-                              )),
-                            ]),
-                          ),
-                        );
-                      },
-                    ) : Padding(padding: const EdgeInsets.only(top: 10), child: Text('no_suggestions_available'.tr)) : const SizedBox(),
-
-                    SizedBox(height: (_isLoggedIn && searchController.suggestedItemList != null) ? Dimensions.paddingSizeLarge : 0),
-
-                    (searchController.popularCategoryList != null && searchController.popularCategoryList!.isNotEmpty) ? Text(
-                      'popular_categories'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
-                    ) : const SizedBox(),
-                    const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                    searchController.popularCategoryList != null ? searchController.popularCategoryList!.isNotEmpty ? Wrap(
-                      children: searchController.popularCategoryList!.map((category) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: Dimensions.paddingSizeSmall, bottom: Dimensions.paddingSizeSmall),
-                          child: CustomInkWell(
-                            onTap: () {
-                              _searchController.text = category.name??'';
-                              searchController.searchData(category.name??'', false);
-                            },
-                            radius: 50,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).disabledColor.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(color: Theme.of(context).disabledColor, width: 0.1),
-                              ),
-                              child: Text(
-                                category!.name??'',
-                                style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color!),
-                                maxLines: 1, overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ) : Padding(padding: const EdgeInsets.only(top: 10), child: Text('no_category_available'.tr)) : const SizedBox(),
-
-                  ])),
-                ),
-                ) : SearchResultWidget(searchText: _searchController.text.trim(), tabController: ResponsiveHelper.isDesktop(context) ? _tabController : null)),
+              ) : SearchRecentWidget(isLoggedIn: _isLoggedIn, searchController: _searchController,) : SearchResultWidget(searchText: _searchController.text.trim(), 
+                tabController: ResponsiveHelper.isDesktop(context) ? _tabController : null) 
+              ),
             ]);
           }),
         )),
