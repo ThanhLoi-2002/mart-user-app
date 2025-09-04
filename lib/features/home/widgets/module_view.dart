@@ -1,7 +1,6 @@
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:sixam_mart/common/widgets/address_widget.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
-import 'package:sixam_mart/features/home/widgets/views/top_offers_near_me.dart';
 import 'package:sixam_mart/features/location/controllers/location_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/address/controllers/address_controller.dart';
@@ -10,6 +9,7 @@ import 'package:sixam_mart/helper/address_helper.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
+import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
 import 'package:sixam_mart/common/widgets/custom_loader.dart';
@@ -30,11 +30,12 @@ class ModuleView extends StatelessWidget {
         // GetBuilder<BannerController>(builder: (bannerController) {
         //   return const BannerView(isFeatured: true);
         // }),
-      
+
         splashController.moduleList != null
             ? splashController.moduleList!.isNotEmpty
                 ? GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       mainAxisSpacing: Dimensions.paddingSizeSmall,
                       crossAxisSpacing: 0,
@@ -48,49 +49,35 @@ class ModuleView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          Container(
-                            width: context.width * 0.18,
-                            height: context.width * 0.18,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              // borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                              color: Color.fromRGBO(255, 192, 153,
-                                  1), //Theme.of(context).cardColor,
-                              // border: Border.all(color: Theme.of(context).primaryColor,
-                              // width: 0.15),
-                              // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                              // spreadRadius: 1, blurRadius: 1)],
-                            ),
-                            child: Container(
-                              width: context.width * 0.12,
-                              height: context.width * 0.12,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color.fromRGBO(255, 221, 154,
-                                    1),
-                              ),
-                              child: CustomInkWell(
-                                onTap: () =>
-                                    splashController.switchModule(index, true),
-                                // radius: Dimensions.radiusDefault,
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ClipRRect(
-                                        // borderRadius: BorderRadius.circular(
-                                        //     Dimensions.radiusSmall),
-                                        child: CustomImage(
-                                          image:
-                                              '${splashController.moduleList![index].iconFullUrl}',
-                                          height: 35,
-                                          width: 35,
-                                        ),
-                                      ),
-                                    ]),
+                           CustomInkWell(
+                            radius: 50,
+                            onTap: () => splashController.switchModule(index, true),
+                            child: SizedBox(
+                              width: 70,
+                              height: 70,
+                              // decoration: BoxDecoration(color: Colors.red),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Image.asset(
+                                    Images.moduleBackgroundOutSide,
+                                  ),
+                                  Image.asset(
+                                    Images.moduleBackgroundInSide,
+                                  ),
+                                  ClipRRect(
+                                    child: CustomImage(
+                                      image:
+                                          '${splashController.moduleList![index].iconFullUrl}',
+                                      height: 35,
+                                      width: 35,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          const SizedBox(height: Dimensions.paddingSizeSmall - 6),
+                      
                           Center(
                               child: Text(
                             splashController.moduleList![index].moduleName!,
@@ -111,10 +98,11 @@ class ModuleView extends StatelessWidget {
                     child: Text('no_module_found'.tr),
                   ))
             : ModuleShimmer(isEnabled: splashController.moduleList == null),
-      
+
         GetBuilder<AddressController>(builder: (locationController) {
           List<AddressModel?> addressList = [];
-          if (AuthHelper.isLoggedIn() && locationController.addressList != null) {
+          if (AuthHelper.isLoggedIn() &&
+              locationController.addressList != null) {
             addressList = [];
             bool contain = false;
             if (AddressHelper.getUserAddressFromSharedPref()!.id != null) {
@@ -144,7 +132,8 @@ class ModuleView extends StatelessWidget {
                               horizontal: Dimensions.paddingSizeSmall),
                           child: TitleWidget(title: 'deliver_to'.tr),
                         ),
-                        const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                        const SizedBox(
+                            height: Dimensions.paddingSizeExtraSmall),
                         SizedBox(
                           height: 80,
                           child: ListView.builder(
@@ -192,10 +181,9 @@ class ModuleView extends StatelessWidget {
                   isEnabled: AuthHelper.isLoggedIn() &&
                       locationController.addressList == null);
         }),
-      
+
         const PopularStoreView(isPopular: false, isFeatured: true),
-        // const TopOffersNearMe(),
-      
+
         const SizedBox(height: 120),
       ]),
     );

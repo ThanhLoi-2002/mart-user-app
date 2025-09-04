@@ -1,5 +1,7 @@
 class Images {
   static const String logo = 'assets/image/logo.png';
+  static const String moduleBackgroundOutSide = 'assets/image/module_background_out_side.png';
+  static const String moduleBackgroundInSide = 'assets/image/module_background_in_side.png';
   static const String placeholder = 'assets/image/placeholder.jpg';
   static const String notificationPlaceholder =
       'assets/image/notification_placeholder.jpg';
