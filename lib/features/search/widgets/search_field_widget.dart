@@ -44,7 +44,9 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
           onPressed: widget.iconPressed as void Function()?,
           icon: Icon(widget.suffixIcon, color: widget.iconColor ?? Theme.of(context).textTheme.bodyLarge!.color),
         ) : null,
-        prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, size: 24, color: Theme.of(context).disabledColor) : null,
+        prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, size: 24, color: Colors.grey[900]
+        //Theme.of(context).disabledColor
+        ) : null,
       ),
       onSubmitted: widget.onSubmit as void Function(String)?,
       onChanged: widget.onChanged as void Function(String)?,

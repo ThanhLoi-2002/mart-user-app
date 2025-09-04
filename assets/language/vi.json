@@ -62,7 +62,7 @@
   "cancel": "Hủy",
   "history": "Lịch sử",
   "clear_all": "Xóa tất cả",
-  "suggestions": "Gợi ý",
+  "suggestions": "Gợi ý cho bạn",
   "item_name": "Tên mặt hàng",
   "approximately": "Xấp xỉ",
   "results": "results",
@@ -143,7 +143,7 @@
   "login_to_continue": "Đăng nhập để Tiếp tục",
   "campaigns": "Chiến dịch",
   "all": "Tất cả",
-  "off": "TẮT",
+  "off": "Giảm",
   "enjoy": "Tận hưởng",
   "off_on_all_categories": "tắt trên tất cả các danh mục",
   "set_location": "Đặt Vị trí",
@@ -1568,5 +1568,6 @@
   "recommended_store": "Cửa hàng được đề xuất",
   "re_enter_your_password": "Nhập lại mật khẩu của bạn.",
   "no_items_found": "Không tìm thấy mặt hàng nào",
-  "this_delivery_fee_includes_all_the_applicable_charges_on_delivery": "Phí giao hàng này bao gồm tất cả các khoản phí áp dụng khi giao hàng."
+  "this_delivery_fee_includes_all_the_applicable_charges_on_delivery": "Phí giao hàng này bao gồm tất cả các khoản phí áp dụng khi giao hàng.",
+  "what_do_you_crave": "Bạn thèm ăn gì"
 }

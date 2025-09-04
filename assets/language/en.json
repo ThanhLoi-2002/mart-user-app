@@ -1570,5 +1570,6 @@
   "recommended_store" : "Recommended Store",
   "re_enter_your_password" : "Re-enter your password.",
   "no_items_found" : "No items found",
-  "this_delivery_fee_includes_all_the_applicable_charges_on_delivery" : "This delivery fee includes all the applicable charges on delivery."
+  "this_delivery_fee_includes_all_the_applicable_charges_on_delivery" : "This delivery fee includes all the applicable charges on delivery.",
+  "what_do_you_crave": "what do you crave"
 }

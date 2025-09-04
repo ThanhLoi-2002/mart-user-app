@@ -7,7 +7,7 @@ class AppConstants {
   static const String appName = '6amMart';
   static const double appVersion = 3.3; ///Flutter sdk 3.32.8
 
-  static const String fontFamily = 'Roboto';
+  static const String fontFamily = 'SF Pro'; // Roboto
   static const bool payInWevView = false;
   static const int balanceInputLen = 10;
   static const String webHostedUrl = 'https://6ammart-web.6amtech.com';
