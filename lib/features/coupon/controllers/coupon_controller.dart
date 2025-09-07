@@ -8,6 +8,12 @@ class CouponController extends GetxController implements GetxService {
   final CouponServiceInterface couponServiceInterface;
   CouponController({required this.couponServiceInterface});
 
+  List<CouponModel>? mockupCouponList = [
+    CouponModel(title: 'Giảm giá 20K VNĐ', code: 'PIA2', expireDate: '30/10/2025'),
+    CouponModel(title: 'Giảm giá 20K VNĐ', code: 'PIA2', expireDate: '30/10/2025'),
+    CouponModel(title: 'Giảm giá 20K VNĐ', code: 'PIA2', expireDate: '30/10/2025')
+  ];
+
   List<CouponModel>? _couponList;
   List<CouponModel>? get couponList => _couponList;
 
@@ -31,7 +37,7 @@ class CouponController extends GetxController implements GetxService {
 
   void setCurrentIndex(int index, bool notify) {
     _currentIndex = index;
-    if(notify) {
+    if (notify) {
       update();
     }
   }
@@ -61,9 +67,9 @@ class CouponController extends GetxController implements GetxService {
     CouponModel? couponModel = await couponServiceInterface.applyCoupon(coupon, storeID);
     if (couponModel != null) {
       _coupon = couponModel;
-      if(_coupon!.couponType == 'free_delivery') {
+      if (_coupon!.couponType == 'free_delivery') {
         _processFreeDeliveryCoupon(deliveryCharge!, order);
-      }else {
+      } else {
         _processCoupon(order);
       }
     } else {
@@ -75,7 +81,7 @@ class CouponController extends GetxController implements GetxService {
   }
 
   _processFreeDeliveryCoupon(double deliveryCharge, double order) {
-    if(deliveryCharge > 0) {
+    if (deliveryCharge > 0) {
       if (_coupon!.minPurchase! <= order) {
         _discount = 0;
         _freeDelivery = true;
@@ -86,7 +92,7 @@ class CouponController extends GetxController implements GetxService {
         _coupon = null;
         _discount = 0;
       }
-    }else {
+    } else {
       showCustomSnackBar('invalid_code_or'.tr);
     }
   }
@@ -141,11 +147,8 @@ class CouponController extends GetxController implements GetxService {
     _isLoading = false;
     _discount = 0.0;
     _freeDelivery = false;
-    if(notify) {
+    if (notify) {
       update();
     }
   }
-
-
-
 }

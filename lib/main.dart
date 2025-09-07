@@ -176,7 +176,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   theme: themeController.darkTheme
                       ? dark()
-                      : light(),
+                      : light(color: Colors.orange[500]!),
                   locale: localizeController.locale,
                   translations: Messages(languages: widget.languages),
                   fallbackLocale: Locale(

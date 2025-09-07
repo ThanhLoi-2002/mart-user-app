@@ -151,7 +151,7 @@
   "my_address": "Địa chỉ của tôi",
   "saved_address": "Địa chỉ đã lưu",
   "add_new_address": "Thêm Địa chỉ Mới",
-  "home": "Nhà riêng",
+  "home": "Trang chủ",
   "office": "Văn phòng",
   "others": "Khác",
   "delivery_address": "Địa chỉ giao hàng",
@@ -1569,5 +1569,15 @@
   "re_enter_your_password": "Nhập lại mật khẩu của bạn.",
   "no_items_found": "Không tìm thấy mặt hàng nào",
   "this_delivery_fee_includes_all_the_applicable_charges_on_delivery": "Phí giao hàng này bao gồm tất cả các khoản phí áp dụng khi giao hàng.",
-  "what_do_you_crave": "Bạn thèm ăn gì"
+  "what_do_you_crave": "Bạn thèm ăn gì",
+  "open_shop": "Mở shop",
+  "all_modules": "Tất cả dịch vụ",
+  "food_and_shopping": "Đồ ăn & Mua sắm",
+  "ride_and_delivery": "Gọi xe & Giao hàng",
+  "super_deal": "Deal siêu hời",
+  "super_coupon": "Ưu đãi siêu hời",
+  "suggestions_for_you": "Gợi ý cho bạn",
+  "delicious_food_near_you": "Món ngon gần bạn",
+  "favorite_restaurant": "Quán yêu thích",
+  "travel_with": "Vi vu cùng"
 }
