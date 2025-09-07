@@ -1,5 +1,11 @@
 class Images {
   static const String logo = 'assets/image/logo.png';
+  static const String chatIcon = 'assets/image/chat_icon.png';
+  static const String historyIcon = 'assets/image/history_icon.png';
+  static const String accountIcon = 'assets/image/account_icon.png';
+  static const String bagIcon = 'assets/image/bag_icon.png';
+  static const String foodIcon = 'assets/image/food_icon.png';
+  static const String openShopIcon = 'assets/image/open_shop_icon.png';
   static const String moduleBackgroundOutSide = 'assets/image/module_background_out_side.png';
   static const String moduleBackgroundInSide = 'assets/image/module_background_in_side.png';
   static const String placeholder = 'assets/image/placeholder.jpg';
@@ -108,7 +114,6 @@ class Images {
   static const String referIcon = 'assets/image/refer_icon.png';
   static const String dmIcon = 'assets/image/dm_icon.png';
   static const String storeIcon = 'assets/image/store_icon.png';
-  static const String chatIcon = 'assets/image/chat_icon.png';
   static const String helpIcon = 'assets/image/help_icon.png';
   static const String aboutIcon = 'assets/image/about_icon.png';
   static const String termsIcon = 'assets/image/terms_icon.png';
